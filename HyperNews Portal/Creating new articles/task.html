@@ -1,0 +1,29 @@
+<div class="step-text">
+<h5 id="description">Description</h5>
+<p>You store your news data in a JSON file. Yet, editing this file whenever you want to add a news article is inconvenient. You need to add a web interface for creating news articles.</p>
+<h5 id="objectives">Objectives</h5>
+<p>Create a new page to add news using a form. This form should send data via <code class="language-html">POST</code> to <em>/news/create/,</em> where a new record will be created with two parameters <code class="language-html">title</code> and <code class="language-html">text</code>. For a correct representation of articles, it's necessary to uphold those names of parameters in HTML form and view them as given. The response should redirect you to the main page when the request is completed.</p>
+<p>If you start the application on your computer with the command <code class="language-html">python manage.py runserver</code>, the page for creating news should be available at the address <em>localhost:8000/news/create/ </em>address.</p>
+<p>The page should also contain a link to the main page with <code class="language-html">target="_blank" href="/news/"</code>.</p>
+<p>In this stage, pay attention to the following:</p>
+<ul>
+<li>A new HTML template with the form for adding a new article — users should have the possibility to <code class="language-html">POST</code> the title and text;</li>
+</ul>
+<p>To make this work, let's brush up on what we know about making HTML forms in templates. Most forms are relatively identical. Here is a code fragment that should be filled with the necessary links and variables:</p>
+<pre><code class="language-html">&lt;body&gt;
+    &lt;form action="..." method="post"&gt;{% csrf_token %}
+        &lt;label for="..."&gt;...: &lt;/label&gt;
+        &lt;input id="..." type="text" name="..."&gt;
+        ...
+        &lt;input type="submit" value="Add"&gt;
+    &lt;/form&gt;
+&lt;/body&gt;</code></pre>
+<ul>
+<li>A view function or class should check whether the request method is POST, read the JSON file, check the existing links (as we remember, that links should be unique) to set a different one for the new article, then get the title and text from the form, set the <code class="language-html">DateTime</code> for it and, at last, add this new item to the JSON;</li>
+<li>Create a URL handler for the page with the news creation form.</li>
+</ul>
+<h5 id="example">Example</h5>
+<p><strong>Example 1:</strong> <em>form page for creating new articles</em></p>
+<p><img alt="news input form" height="133" name="news_add.png" src="https://ucarecdn.com/439811c2-92b7-4f57-ad5a-479832497a83/" width="523"/></p>
+<p></p><div class="alert alert-primary">Use the current time to populate the <code class="language-html">created</code> field, and do not forget to convert it to a string before saving it to JSON. </div>
+</div>

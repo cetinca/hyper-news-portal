@@ -1,0 +1,34 @@
+<div class="step-text">
+<h5 id="description">Description</h5>
+<p>You're working on the college newspaper called HyperNews. You are comfortable in the digital world, so you came up with the idea of publishing the news online and decided to create a website for this.</p>
+<p>Creating the HyperNews website will take some time, so for now, you’ll start by creating a <code class="language-python">Coming soon</code> page.</p>
+<h5 id="objectives">Objectives</h5>
+<p>Create the first handler for your server.</p>
+<p>Here is a check-list to succeed in the task:</p>
+<ul>
+<li>Create the <em>templates/news</em> directory inside your <em>news</em> app folder and add the directory to the <code class="language-python">TEMPLATES</code> list in the <em>settings.py</em> file:</li>
+</ul>
+<pre><code class="language-python">NEWS_TEMPLATE_PATH = os.path.join(BASE_DIR, 'news/templates/news')
+
+TEMPLATES = [
+    {
+        ...
+        'DIRS': [NEWS_TEMPLATE_PATH],
+        ...
+    }</code></pre>
+<ul>
+<li>Add an HTML template for the first page of the project within the <em>templates/news </em>directory. Remember, the <code class="language-python">Coming soon</code> message inside the HTML body is our main goal in this stage;</li>
+<li>The <em>views.py</em> file needs a function to render the <code class="language-python">Coming soon</code> page;</li>
+<li>Our brand-new page needs an address! In the case of web development, it is an URL pattern for this new view function in the news/<em>urls.py</em> file (you need to create the file first!);</li>
+<li>Include app-level URLs in the project's file by adding <code class="language-python">path('', include('news.urls'))</code> to the project's <em>urls.py</em>. Don't forget to import the <code class="language-python">include</code> function from <em>django.urls</em> too!</li>
+<li>Don't forget to add the news application to <code class="language-python">INSTALLED_APPS</code> in the project's <em>settings.py</em> file.</li>
+</ul>
+<p>Note, that you can get "Error in test #1 Cannot apply migrations to an empty database" when you test your solution for the first time<strong>. </strong>The following commands help to avoid this situation and are necessary when creating any Django projects:</p>
+<pre><code class="language-no-highlight">python3 manage.py makemigrations
+python3 manage.py migrate</code></pre>
+<p>By the way, as the response we need to get is quite simple by now, there is another option to pass this stage. You can just implement <code class="language-python">HttpResponse</code> with a <code class="language-python">Coming soon</code> string in a <code class="language-python">view</code> function without using a template. In such a case, you can follow the objectives of creating templates later. Feel free to choose your variant.</p>
+<p>If you start the project on your computer with the <code class="language-python">python manage.py runserver</code> command, your server should respond with the text <code class="language-python">Coming soon</code> at the address <code class="language-python">localhost:8000</code>.</p>
+<h5 id="example">Example</h5>
+<p><strong>Example 1: </strong><em>the "Coming soon" page</em></p>
+<p><img alt="coming soon page" height="274" name="stage1.png" src="https://ucarecdn.com/a60bc790-fa53-44cf-a2f7-b134558b5e6e/" width="288"/></p>
+</div>

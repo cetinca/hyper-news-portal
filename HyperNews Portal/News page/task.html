@@ -1,0 +1,45 @@
+<div class="step-text">
+<h5 id="description">Description</h5>
+<p>You just got the first story for HyperNews, and it’s out of this world! To publish it, you need to add a page to display news articles.</p>
+<h5 id="objectives">Objectives</h5>
+<p>You will store data in a JSON file. This file will have the name <code class="language-python">news.json</code>, save it to the root folder of your project (for example, <em>/home/user/PycharmProjects/HyperNews Portal/HyperNews Portal/task/hypernews/news.json</em>). The path to this file is normally described by the <code class="language-python">BASE_DIR</code> variable in the project settings. We will need it for the definition of the <code class="language-python">NEWS_JSON_PATH</code> variable:</p>
+<pre><code class="language-python">NEWS_JSON_PATH = os.path.join(BASE_DIR, 'hypernews/news.json')</code></pre>
+<p>Pay attention to this variable and modify it according to the JSON file location for the correct work of your application. To access this variable, you should import settings to the <em>views.py</em> file:</p>
+<pre><code class="language-python">from django.conf import settings</code></pre>
+<p>As the <code class="language-python">news</code> app operates with JSON format, it's necessary to import the <code class="language-python">json</code> module, too:</p>
+<pre><code class="language-python">import json</code></pre>
+<p>Your JSON file should contain an array of objects with the obligatory fields <code class="language-python">created</code>, <code class="language-python">text</code>, <code class="language-python">title</code>, and <code class="language-python">link</code>:</p>
+<pre><code class="language-json">[
+  {
+    "created": "2020-02-22 16:40:00",
+    "text": "A new star appeared in the sky.",
+    "title": "A star is born",
+    "link": 9234732
+  },
+  ...
+]</code></pre>
+<p>The <code class="language-python">created</code> field should contain a date in the format <a href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes" rel="noopener noreferrer nofollow" target="_blank">"%Y-%m-%d %H:%M:%S"</a>.</p>
+<p>Show each element of the JSON array (an article) on a generated page with the path <a href="http://localhost:8000/news/1/" rel="nofollow noopener noreferrer" target="_blank">http://localhost:8000/news/n/</a>, where <em>n</em> is a unique numeric link identifier. </p>
+<p>To display article content, create an HTML template. A proper location for this file is <em>templates/news</em>. </p>
+<p>The view function in <code class="language-python">views.py</code> should read data from <em>news.json</em>, store it in a dictionary, and process it to the context of the rendered page. Each article should be represented by information from the fields <code class="language-python">created</code>, <code class="language-python">title</code> and <code class="language-python">text</code>.</p>
+<p>In the <code class="language-python">view</code> function, compare <em>n</em> with the news identifier. In case they are the same, render a page with an appropriate article like:</p>
+<pre><code class="language-python">def article(request, link):
+  ...
+  if list_item['link'] == link:
+      return render(request, 'list_item_page.html', list_item)</code></pre>
+<p>So far, in this stage, you need to:</p>
+<ul>
+<li>Create a <code class="language-python">view</code> class or a function to get data from a JSON file and convert it to context for each article's separate page;</li>
+<li>Create a URL handler for generating pages;</li>
+<li>Add an HTML template for displaying information from JSON.</li>
+</ul>
+<h5 id="example">Example</h5>
+<p>If you start the application on your computer with the command <code class="language-python">python manage.py runserver</code>, the page at <em>localhost:8000/news/9234732/</em> should display the news article as follows:</p>
+<pre><code class="language-html">&lt;h2&gt;A star is born&lt;/h2&gt;
+&lt;p&gt;2020-02-22 16:40:00&lt;/p&gt;
+&lt;p&gt;A new star appeared in the sky.&lt;/p&gt;
+</code></pre>
+<p>Add a link to the future main page with <code class="language-python">target="_blank" href="/news/"</code> below.</p>
+<p>Here is what it looks like:</p>
+<p><img alt="displaying information from JSON" height="166" name="stage2.png" src="https://ucarecdn.com/a06704e8-572c-4107-b15b-01ac30479d07/" width="384"/></p>
+</div>

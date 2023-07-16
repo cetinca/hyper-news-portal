@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Hyper news</h2>
+
+{% regroup articles|dictsortreversed:"created" by created|date:"Y-m-d" as grouped_articles %}
+
+{% for grouped_article in grouped_articles %}
+    <h4>{{ grouped_article.grouper }}</h4>
+    <ul>
+    {% for article in grouped_article.list %}
+        <li><a href="/news/{{ article.link }}/">{{ article.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% endfor %}
+
+<a target="_blank" href="/news/create/">Create</a>
+
+<form method="get" action="{% url 'news:article_list' %}">
+  {% csrf_token %}
+  <label for="query_field">Query</label>
+  <input type="text" id="query_field" name="q">
+  <button type="submit">Search</button>
+</form>
+
+{% endblock content %}

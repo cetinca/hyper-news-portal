@@ -1,0 +1,98 @@
+<div class="step-text">
+<h5 id="description">Description</h5>
+<p>For now, the news articles can be accessed with direct links with identifiers known only to you. Let's collect the news articles on one page and display them to our users. </p>
+<h5 id="objectives">Objectives</h5>
+<p>At the top of your main page, place the page header:</p>
+<pre><code class="language-html">&lt;h2&gt;Hyper news&lt;/h2&gt;</code></pre>
+<p>Below, you need to list your news articles and display the title, publication date, and a link to the article page. Group the articles by date into unordered lists.</p>
+<p>The most recent news should be at the top.</p>
+<p>Add the link below to the page where users can add their news:</p>
+<pre><code class="language-html">target="_blank" href="/news/create/"</code></pre>
+<p>There is a short algorithm of actions for this stage</p>
+<ul>
+<li>Modify a view class or function which gets data from a JSON file. You can create one more; it's totally up to you. It should additionally render a page for the list of articles. The tricky thing is to reorganize the dictionary to sort articles by date;</li>
+<li>Create a URL handler for the page with the news list;</li>
+<li>Add an HTML template for the news list.</li>
+</ul>
+<h5 id="example">Example</h5>
+<p>Let's imagine that you have a JSON file with the following data:</p>
+<pre><code class="language-json">[
+  {
+    "created": "2020-02-22 16:40:00",
+    "text": "Text of the news 1",
+    "title": "First news",
+    "link": 1
+  },
+  {
+    "created": "2020-02-22 14:00:00",
+    "text": "Text of the news 2",
+    "title": "Second news",
+    "link": 2
+  },
+  {
+    "created": "2019-03-21 01:40:00",
+    "text": "Text of the news 3",
+    "title": "Third news",
+    "link": 3
+  },
+  {
+    "created": "2021-01-01 01:01:00",
+    "text": "Text of the news 4",
+    "title": "Fourth news",
+    "link": 4
+  }
+]</code></pre>
+<p>If you start the application on your computer with the command <code class="language-html">python manage.py runserver</code>, the main page will be available at the address <em>localhost:8000/news/</em>.</p>
+<p>The expected result at <em>localhost:8000/news/</em> is:</p>
+<pre><code class="language-html">&lt;h4&gt;2021-01-01&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="/news/4/"&gt;Fourth news&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4&gt;2020-02-22&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="/news/1/"&gt;First news&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/news/2/"&gt;Second news&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4&gt;2019-03-21&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="/news/3/"&gt;Third news&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</code></pre>
+<p>Don't forget to add a link at the bottom of the page.</p>
+<pre><code class="language-html">target="_blank" href="/news/create/"</code></pre>
+<p>Here is what it looks like:</p>
+<p><img alt="displaying news list" height="382" name="Снимок экрана от 2023-07-08 16-25-40.png" src="https://ucarecdn.com/c4bfde0a-de56-4a3c-a9c2-056caba8a4bc/" width="311"/></p>
+<p> </p>
+<p>As was mentioned in the Objectives section, a tricky thing is to sort news from JSON files. This can be done in several ways.</p>
+<p></p><div class="alert alert-primary"> Remember, that standard Python dictionaries are unordered (until Python 3.7). Even if you sorted the (key, value) pairs, you wouldn't be able to store them in a <code class="language-html">dict</code> in such a way that would preserve the ordering. One of the ways to solve this problem is to use <a href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" rel="noopener noreferrer nofollow" target="_blank">OrderedDict</a>.</div>
+<p>Here is an extra tip on instruments that can be used for achieving this goal! It is <code class="language-html">groupby()</code> method from the <code class="language-html">itertools</code> package. This method calculates the keys for each element present in iterable. It returns a key and an iterable of grouped items. Note that list must be sorted before using <code class="language-html">groupby()</code>.</p>
+<p>For example, there is a dictionary for cities:</p>
+<pre><code class="language-python">cites = [
+    {'name': 'Mumbai', 'population': 19000000, 'country': 'India'},
+    {'name': 'Calcutta', 'population': 15000000, 'country': 'India'},
+    {'name': 'New York', 'population': 20000000, 'country': 'USA'},
+    {'name': 'Chicago', 'population': 7000000, 'country': 'USA'},
+    {'name': 'Tokyo', 'population': 33000000, 'country': 'Japan'},
+    ]</code></pre>
+<p>In this case, it's possible to use <code class="language-html">regroup</code> template tag to group data by attributes:</p>
+<pre><code class="language-html">...
+{% regroup cities by country as countries_list %}
+&lt;ul&gt;
+    {% for country in countries_list %}
+        &lt;li&gt;{{ country.grouper }}
+            &lt;ul&gt;
+            {% for city in country.list %}
+                &lt;li&gt;{{ city.name }}: {{ city.population }}&lt;/li&gt;
+            {% endfor %}
+            &lt;/ul&gt;
+        &lt;/li&gt;
+    {% endfor %}
+&lt;/ul&gt;</code></pre>
+<p>Feel free to experiment!</p>
+</div>
